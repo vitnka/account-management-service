@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  postgresdb:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: myPassword
+      PGDATA: /data/postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/data/postgres
+
+  account-managment:
+    image: docker.io/library/wk:0.1.0-SNAPSHOT
+    environment:
+      DB_URL: postgres
+      DB_USER: postgres
+      DB_PASS: myPassword
+      DB_NAME: postgres
+    ports:
+      - "1234:1234"
+    depends_on:
+      - postgres
+volumes:
+  postgres:
